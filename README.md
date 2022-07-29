@@ -6,7 +6,8 @@ Module for [MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)
 
 ## 功能
 
-在群聊中接受到指定消息时发送特定的消息和色图。
+- 在群聊中接受到指定消息时发送特定的消息，并通过私聊随机发送一张指定路径下的色图。
+- 在私聊接受到指定消息时随机发送一张指定路径下的色图。
 
 ## 使用方法
 
