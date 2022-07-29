@@ -1,6 +1,6 @@
-# MiraiGo-module-setu-repo
+# MiraiGo-module-seturepo
 
-ID: aimerneige.test.setu
+ID: `com.aimerneige.seturepo`
 
 Module for [MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)
 
@@ -18,7 +18,7 @@ package example
 imports (
     // ...
 
-    _ "github.com/aimerneige/MiraiGo-module-setu-repo"
+    _ "github.com/yukichan-bot-module/MiraiGo-module-seturepo"
 
     // ...
 )

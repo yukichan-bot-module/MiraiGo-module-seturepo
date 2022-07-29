@@ -1,4 +1,4 @@
-module github.com/aimerneige/MiraiGo-module-setu-repo
+module github.com/aimerneige/MiraiGo-module-seturepo
 
 go 1.17
 
