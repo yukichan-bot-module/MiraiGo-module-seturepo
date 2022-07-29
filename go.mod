@@ -1,4 +1,4 @@
-module github.com/aimerneige/MiraiGo-module-seturepo
+module github.com/yukichan-bot-module/MiraiGo-module-seturepo
 
 go 1.17
 
