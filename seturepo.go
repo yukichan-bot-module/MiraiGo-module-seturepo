@@ -18,9 +18,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var repo map[string][2]string
 var instance *seturepo
 var logger = utils.GetModuleLogger("com.aimerneige.seturepo")
+var repo map[string][2]string
+var blacklistUser []int64
 
 type seturepo struct {
 }
@@ -50,6 +51,10 @@ func (s *seturepo) Init() {
 	if err != nil {
 		logger.WithError(err).Errorf("Unable to read config file in %s", path)
 	}
+	blacklistUserSlice := config.GlobalConfig.GetIntSlice("aimerneige.seturepo.blacklist")
+	for _, user := range blacklistUserSlice {
+		blacklistUser = append(blacklistUser, int64(user))
+	}
 }
 
 // PostInit 第二次初始化
@@ -61,6 +66,9 @@ func (s *seturepo) PostInit() {
 // Serve 注册服务函数部分
 func (s *seturepo) Serve(b *bot.Bot) {
 	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
+		if inBlacklist(msg.Sender.Uin) {
+			return
+		}
 		for k, v := range repo {
 			if msg.ToString() == k {
 				c.SendGroupMessage(msg.GroupCode, message.NewSendingMessage().Append(message.NewText(v[0])))
@@ -127,4 +135,13 @@ func getSetuImg(dir string) (io.ReadSeeker, error) {
 		logger.WithError(err).Errorf("Fail to read img file %s", imgFile.ModTime())
 	}
 	return bytes.NewReader(imgBytes), nil
+}
+
+func inBlacklist(userID int64) bool {
+	for _, v := range blacklistUser {
+		if userID == v {
+			return true
+		}
+	}
+	return false
 }

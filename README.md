@@ -38,10 +38,13 @@ imports (
   - "/opt/img-data/keqing/"
 ```
 
-在你的 `application.yaml` 里填入配置来指定配置文件路径（默认 `./seturepo.yaml`）：
+在你的 `application.yaml` 里填入配置：
+
 
 ```yaml
 aimerneige:
   seturepo:
-    path: "./config/seturepo.yaml"
+    path: "./config/seturepo.yaml" # 默认配置文件路径 `./seturepo.yaml`
+    blacklist: # 黑名单
+      - 1781924496
 ```
