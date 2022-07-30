@@ -32,10 +32,10 @@ imports (
 ```yaml
 "来点萝莉":
   - "太变态了！不可以!"
-  - "/home/aimerneige/Pictures/luoli/"
+  - "/opt/img-data/luoli/"
 "刻晴老婆":
   - "好耶，是刻晴"
-  - "/home/aimerneige/Pictures/wallpaper/"
+  - "/opt/img-data/keqing/"
 ```
 
 在你的 `application.yaml` 里填入配置来指定配置文件路径（默认 `./seturepo.yaml`）：
