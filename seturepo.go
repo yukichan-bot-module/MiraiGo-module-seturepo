@@ -22,6 +22,7 @@ var instance *seturepo
 var logger = utils.GetModuleLogger("com.aimerneige.seturepo")
 var repo map[string][2]string
 var blacklistUser []int64
+var allowedList []int64
 
 type seturepo struct {
 }
@@ -55,6 +56,10 @@ func (s *seturepo) Init() {
 	for _, user := range blacklistUserSlice {
 		blacklistUser = append(blacklistUser, int64(user))
 	}
+	allowedListSlice := config.GlobalConfig.GetIntSlice("aimerneige.seturepo.allowed")
+	for _, user := range allowedListSlice {
+		allowedList = append(allowedList, int64(user))
+	}
 }
 
 // PostInit 第二次初始化
@@ -66,6 +71,12 @@ func (s *seturepo) PostInit() {
 // Serve 注册服务函数部分
 func (s *seturepo) Serve(b *bot.Bot) {
 	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
+		if !isAllowed(msg.GroupCode) {
+			return
+		}
+		if msg.Sender.IsAnonymous() {
+			return
+		}
 		if inBlacklist(msg.Sender.Uin) {
 			return
 		}
@@ -87,7 +98,9 @@ func (s *seturepo) Serve(b *bot.Bot) {
 
 // Start 此函数会新开携程进行调用
 // ```go
-// 		go exampleModule.Start()
+//
+//	go exampleModule.Start()
+//
 // ```
 // 可以利用此部分进行后台操作
 // 如 http 服务器等等
@@ -137,9 +150,18 @@ func getSetuImg(dir string) (io.ReadSeeker, error) {
 	return bytes.NewReader(imgBytes), nil
 }
 
-func inBlacklist(userID int64) bool {
+func inBlacklist(userUin int64) bool {
 	for _, v := range blacklistUser {
-		if userID == v {
+		if userUin == v {
+			return true
+		}
+	}
+	return false
+}
+
+func isAllowed(groupCode int64) bool {
+	for _, v := range allowedList {
+		if groupCode == v {
 			return true
 		}
 	}

@@ -47,6 +47,10 @@ aimerneige:
     path: "./config/seturepo.yaml" # 默认配置文件路径 `./seturepo.yaml`
     blacklist: # 黑名单
       - 1781924496
+    allowed: # 开启功能的群
+      - 857066811
+      - 328521977
+      - 306979312
 ```
 
 ## LICENSE
