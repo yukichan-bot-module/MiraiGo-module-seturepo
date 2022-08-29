@@ -70,7 +70,7 @@ func (s *seturepo) PostInit() {
 
 // Serve 注册服务函数部分
 func (s *seturepo) Serve(b *bot.Bot) {
-	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
+	b.GroupMessageEvent.Subscribe(func(c *client.QQClient, msg *message.GroupMessage) {
 		if !isAllowed(msg.GroupCode) {
 			return
 		}
@@ -87,7 +87,7 @@ func (s *seturepo) Serve(b *bot.Bot) {
 			}
 		}
 	})
-	b.OnPrivateMessage(func(c *client.QQClient, msg *message.PrivateMessage) {
+	b.PrivateMessageEvent.Subscribe(func(c *client.QQClient, msg *message.PrivateMessage) {
 		for k, v := range repo {
 			if msg.ToString() == k {
 				sendSetu(c, msg.Sender.Uin, v[1])
